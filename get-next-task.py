@@ -1,5 +1,6 @@
 import requests
 import json
+import random
 
 # Base URL for Trello API
 BASE_URL = 'https://api.trello.com/1'
@@ -40,6 +41,10 @@ def get_tasks_in_list(config, list_id):
     return response.json()
 
 
+def select_random_task(tasks):
+    return random.choice(tasks)
+
+
 def main():
     config = load_config()
 
@@ -57,9 +62,17 @@ def main():
 
     tasks = get_tasks_in_list(config, list_id)
 
-    print(f"Tasks in list '{config['list_name']}':")
-    for task in tasks:
-        print(f"- {task['name']}")
+    if not tasks:
+        print(f"No tasks found in the list '{config['list_name']}'.")
+        return
+
+    random_task = select_random_task(tasks)
+
+    print("\nYour task for today:")
+    print("===================================")
+    print(f"{random_task['name']}")
+    print("===================================\n")
+
 
 if __name__ == "__main__":
     main()
