@@ -3,6 +3,7 @@ import json
 import random
 import argparse
 import time
+from datetime import datetime, timedelta
 
 # Base URL for Trello API
 BASE_URL = 'https://api.trello.com/1'
@@ -59,11 +60,13 @@ def select_random_task(tasks):
     return random.choice(tasks)
 
 
-def print_task(task):
+def print_task(task, next_time):
     print("\nYour task for the next hour:")
     print("===================================")
     print(f"{task['name']}")
-    print("===================================\n")
+    print("===================================")
+    print(f"Current time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Next task at: {next_time.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 
 def main():
@@ -82,7 +85,8 @@ def main():
                 print("No tasks found. Retrying in 1 hour.")
             else:
                 random_task = select_random_task(tasks)
-                print_task(random_task)
+                next_time = datetime.now() + timedelta(hours=1)
+                print_task(random_task, next_time)
 
             time.sleep(3600)  # Sleep for 1 hour
     else:
@@ -93,7 +97,8 @@ def main():
             return
 
         random_task = select_random_task(tasks)
-        print_task(random_task)
+        next_time = datetime.now() + timedelta(hours=1)
+        print_task(random_task, next_time)
 
 
 if __name__ == "__main__":
