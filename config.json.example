@@ -1,0 +1,6 @@
+{
+  "API_KEY": "your_api_key",
+  "TOKEN": "your_token",
+  "board_name": "your_board_name",
+  "list_name": "your_list_name"
+}

@@ -1,16 +1,17 @@
-# Replace these with your Trello API key and token
 import requests
-
-# Replace these with your Trello API key and token
-API_KEY = ''
-TOKEN = ''
+import json
 
 # Base URL for Trello API
 BASE_URL = 'https://api.trello.com/1'
 
 
-def get_board_id(board_name):
-    url = f"{BASE_URL}/members/me/boards?key={API_KEY}&token={TOKEN}"
+def load_config():
+    with open('config.json', 'r') as f:
+        return json.load(f)
+
+
+def get_board_id(config, board_name):
+    url = f"{BASE_URL}/members/me/boards?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
     boards = response.json()
 
@@ -21,8 +22,8 @@ def get_board_id(board_name):
     return None
 
 
-def get_list_id(board_id, list_name):
-    url = f"{BASE_URL}/boards/{board_id}/lists?key={API_KEY}&token={TOKEN}"
+def get_list_id(config, board_id, list_name):
+    url = f"{BASE_URL}/boards/{board_id}/lists?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
     lists = response.json()
 
@@ -33,30 +34,30 @@ def get_list_id(board_id, list_name):
     return None
 
 
-def get_tasks_in_list(list_id):
-    url = f"{BASE_URL}/lists/{list_id}/cards?key={API_KEY}&token={TOKEN}"
+def get_tasks_in_list(config, list_id):
+    url = f"{BASE_URL}/lists/{list_id}/cards?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
     return response.json()
 
 
 def main():
-    board_name = input("Enter the name of the board: ")
-    board_id = get_board_id(board_name)
+    config = load_config()
+
+    board_id = get_board_id(config, config['board_name'])
 
     if not board_id:
-        print(f"No board found with the name '{board_name}'.")
+        print(f"No board found with the name '{config['board_name']}'.")
         return
 
-    list_name = input("Enter the name of the list: ")
-    list_id = get_list_id(board_id, list_name)
+    list_id = get_list_id(config, board_id, config['list_name'])
 
     if not list_id:
-        print(f"No list found with the name '{list_name}'.")
+        print(f"No list found with the name '{config['list_name']}'.")
         return
 
-    tasks = get_tasks_in_list(list_id)
+    tasks = get_tasks_in_list(config, list_id)
 
-    print(f"Tasks in list '{list_name}':")
+    print(f"Tasks in list '{config['list_name']}':")
     for task in tasks:
         print(f"- {task['name']}")
 
