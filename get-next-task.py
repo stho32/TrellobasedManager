@@ -3,6 +3,7 @@ import json
 import random
 import argparse
 import time
+import os
 from datetime import datetime, timedelta
 
 # Base URL for Trello API
@@ -60,7 +61,12 @@ def select_random_task(tasks):
     return random.choice(tasks)
 
 
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 def print_task(task, next_time):
+    clear_console()
     print("\nYour task for the next hour:")
     print("===================================")
     print(f"{task['name']}")
