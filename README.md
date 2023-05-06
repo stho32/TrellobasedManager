@@ -2,12 +2,6 @@
 
 Trello Task Manager is a simple Python script that selects a random task from a specified Trello list and displays it for you. It can be run in a loop mode, where it selects a new task every hour and plays a gong sound as an alarm. The tool is designed to help improve focus and productivity by providing a clear and randomized task to work on.
 
-## Background
-
-For more information about the motivation and approach behind this tool, refer to the following document:
-
-- [Klare Aufgabenzuteilung](obsidian://open?vault=Training2&file=A3s%2FKlare%20Aufgabenzuteilung)
-
 ## Installation
 
 To get started, first install the required dependencies:
