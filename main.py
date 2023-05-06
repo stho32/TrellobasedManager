@@ -15,7 +15,7 @@ def select_and_print_task(config, args):
         return False
 
     random_task = select_random_task(tasks)
-    next_time = datetime.now() + timedelta(minutes=args.loop)
+    next_time = datetime.now() + timedelta(minutes=args.work_duration)
     print_task(random_task, next_time)
     return True
 
@@ -23,22 +23,42 @@ def select_and_print_task(config, args):
 def main():
     parser = argparse.ArgumentParser(description="Trello task selector.")
     parser.add_argument(
-        "--loop",
+        "--work-duration",
         type=int,
         metavar="MINUTES",
-        help="Enable loop mode to select tasks every specified number of minutes.",
+        help="Specify the work duration in minutes for each task.",
+    )
+    parser.add_argument(
+        "--break-duration",
+        type=int,
+        metavar="MINUTES",
+        default=0,
+        help="Specify the break duration in minutes after each task.",
     )
 
     args = parser.parse_args()
 
     config = load_config()
 
-    if args.loop is not None:
+    if args.work_duration is not None:
         while True:
             task_found = select_and_print_task(config, args)
-            if not task_found:
-                print(f"Retrying in {args.loop} minutes.")
-            time.sleep(args.loop * 60)  # Sleep for the specified number of minutes
+            if task_found:
+                print(f"Working on the task for {args.work_duration} minutes.")
+                time.sleep(
+                    args.work_duration * 60
+                )  # Sleep for the specified work duration
+
+                print(f"Taking a {args.break_duration} minute break.")
+                time.sleep(
+                    args.break_duration * 60
+                )  # Sleep for the specified break duration
+
+            else:
+                print(f"Retrying in {args.work_duration} minutes.")
+                time.sleep(
+                    args.work_duration * 60
+                )  # Sleep for the specified work duration
     else:
         select_and_print_task(config, args)
 
