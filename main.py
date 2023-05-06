@@ -3,26 +3,9 @@ import argparse
 import time
 import os
 from datetime import datetime, timedelta
+from task_utils import print_task, select_random_task
 
 from trello_utils import load_config, get_tasks, get_board_id, get_list_id
-
-
-def select_random_task(tasks):
-    return random.choice(tasks)
-
-
-def clear_console():
-    os.system("cls" if os.name == "nt" else "clear")
-
-
-def print_task(task, next_time):
-    clear_console()
-    print("\nYour task for the next hour:")
-    print("===================================")
-    print(f"{task['name']}")
-    print("===================================")
-    print(f"Current time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Next task at: {next_time.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 
 def main():
