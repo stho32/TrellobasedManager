@@ -9,15 +9,24 @@ To get started, first install the required dependencies:
 ```
 pip install requests
 pip install pygame
+pip install pyttsx3
 ```
 
-## Gong Sound
+## Sound
+
+### Gong Sound
 
 This project uses a gong sound by Daniel Simon, licensed under CC BY 3.0. You can find the source and license details below:
 
-- Gong sound by Daniel Simon is licensed under CC BY 3.0.
+- Gong sound by Daniel Simon is licensed under CC BY 3.0. (actually Attribution 3.0)
 - Source: [https://soundbible.com/2148-Chinese-Gong.html](https://soundbible.com/2148-Chinese-Gong.html)
 - License: [https://creativecommons.org/licenses/by/3.0/](https://creativecommons.org/licenses/by/3.0/)
+
+### Rooster Sound
+
+- https://soundbible.com/1134-Rooster-Crowing.html
+- License: Attribution 3.0
+- by Mike Koenig
 
 ## Usage
 
