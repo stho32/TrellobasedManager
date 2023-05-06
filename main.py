@@ -6,6 +6,20 @@ from trello_utils import load_config, get_tasks, get_board_id, get_list_id
 from sound_utils import play_mp3_async
 
 
+def select_and_print_task(config):
+    play_mp3_async("chinese-gong-daniel_simon.mp3")
+    tasks = get_tasks(config)
+
+    if not tasks:
+        print("No tasks found.")
+        return False
+
+    random_task = select_random_task(tasks)
+    next_time = datetime.now() + timedelta(hours=1)
+    print_task(random_task, next_time)
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(description="Trello task selector.")
     parser.add_argument(
@@ -20,28 +34,12 @@ def main():
 
     if args.loop:
         while True:
-            play_mp3_async("chinese-gong-daniel_simon.mp3")
-            tasks = get_tasks(config)
-
-            if not tasks:
-                print("No tasks found. Retrying in 1 hour.")
-            else:
-                random_task = select_random_task(tasks)
-                next_time = datetime.now() + timedelta(hours=1)
-                print_task(random_task, next_time)
-
+            task_found = select_and_print_task(config)
+            if not task_found:
+                print("Retrying in 1 hour.")
             time.sleep(3600)  # Sleep for 1 hour
     else:
-        play_mp3_async("chinese-gong-daniel_simon.mp3")
-        tasks = get_tasks(config)
-
-        if not tasks:
-            print("No tasks found.")
-            return
-
-        random_task = select_random_task(tasks)
-        next_time = datetime.now() + timedelta(hours=1)
-        print_task(random_task, next_time)
+        select_and_print_task(config)
 
 
 if __name__ == "__main__":
