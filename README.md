@@ -1,6 +1,6 @@
 # Trello Task Manager
 
-Trello Task Manager is a simple Python script that selects a random task from a specified Trello list and displays it for you. It can be run in a loop mode, where it selects a new task every hour and plays a gong sound as an alarm. The tool is designed to help improve focus and productivity by providing a clear and randomized task to work on.
+Trello Task Manager is a simple Python script that selects a random task from a specified Trello list and displays it for you. It can be run with a customizable work duration and break duration, playing a gong sound when a new task starts and a rooster crowing sound when the break starts. The tool is designed to help improve focus and productivity by providing a clear and randomized task to work on.
 
 ## Installation
 
@@ -18,31 +18,35 @@ pip install pyttsx3
 
 This project uses a gong sound by Daniel Simon, licensed under CC BY 3.0. You can find the source and license details below:
 
-- Gong sound by Daniel Simon is licensed under CC BY 3.0. (actually Attribution 3.0)
+- Gong sound by Daniel Simon is licensed under Attribution 3.0.
 - Source: [https://soundbible.com/2148-Chinese-Gong.html](https://soundbible.com/2148-Chinese-Gong.html)
 - License: [https://creativecommons.org/licenses/by/3.0/](https://creativecommons.org/licenses/by/3.0/)
 
 ### Rooster Sound
 
-- https://soundbible.com/1134-Rooster-Crowing.html
-- License: Attribution 3.0
-- by Mike Koenig
+- Rooster Crowing sound by Mike Koenig is licensed under Attribution 3.0.
+- Source: [https://soundbible.com/1134-Rooster-Crowing.html](https://soundbible.com/1134-Rooster-Crowing.html)
+- License: [https://creativecommons.org/licenses/by/3.0/](https://creativecommons.org/licenses/by/3.0/)
 
 ## Usage
 
 The main script is `main.py`. To run it, simply execute the following command in your terminal:
 
 ```
-python main.py
+python main.py --work-duration MINUTES
 ```
 
-By default, the script will select a random task and display it along with the current time and the time for the next task. If you want the script to run in loop mode and select a new task every hour, use the `--loop` flag:
+Replace `MINUTES` with the desired work duration in minutes for each task.
+
+To add a break after each task, use the `--break-duration` flag:
 
 ```
-python main.py --loop
+python main.py --work-duration MINUTES --break-duration MINUTES
 ```
 
-In loop mode, the script will continuously select a new task every hour and play the gong sound as an alarm.
+Replace the second `MINUTES` with the desired break duration in minutes after each task.
+
+In this mode, the script will continuously select a new task after the specified work duration, play the gong sound as an alarm, and then take a break for the specified break duration while playing a rooster crowing sound.
 
 ## Configuration
 
@@ -69,7 +73,7 @@ The repository is organized into the following files and directories:
 - `task_utils.py`: Contains functions related to selecting and displaying tasks.
 - `trello_utils.py`: Contains functions for interacting with the Trello API.
 - `sound_utils.py`: Contains the `play_mp3_async` function for playing MP3 files asynchronously.
-- `Sounds`: A directory containing the gong sound file (`chinese-gong-daniel_simon.mp3`).
+- `Sounds`: A directory containing the gong sound file (`chinese-gong-daniel_simon.mp3`) and the rooster crowing sound file (`Rooster_Crowing-SoundBible.com-43612401.mp3`).
 
 ## Contributing
 
