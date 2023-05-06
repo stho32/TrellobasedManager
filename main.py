@@ -1,11 +1,9 @@
-import random
 import argparse
 import time
-import os
 from datetime import datetime, timedelta
 from task_utils import print_task, select_random_task
-
 from trello_utils import load_config, get_tasks, get_board_id, get_list_id
+from sound_utils import play_mp3_async
 
 
 def main():
@@ -22,6 +20,7 @@ def main():
 
     if args.loop:
         while True:
+            play_mp3_async("chinese-gong-daniel_simon.mp3")
             tasks = get_tasks(config)
 
             if not tasks:
@@ -33,6 +32,7 @@ def main():
 
             time.sleep(3600)  # Sleep for 1 hour
     else:
+        play_mp3_async("chinese-gong-daniel_simon.mp3")
         tasks = get_tasks(config)
 
         if not tasks:
