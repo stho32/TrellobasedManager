@@ -34,13 +34,14 @@ def main():
         "--work-duration",
         type=int,
         metavar="MINUTES",
+        default=25,
         help="Specify the work duration in minutes for each task.",
     )
     parser.add_argument(
         "--break-duration",
         type=int,
         metavar="MINUTES",
-        default=0,
+        default=5,
         help="Specify the break duration in minutes after each task.",
     )
 
