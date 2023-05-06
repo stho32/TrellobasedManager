@@ -10,7 +10,7 @@ def select_random_task(tasks):
 
 def print_task(task, next_time):
     clear_console()
-    print("\nYour task for the next hour:")
+    print("\nYour task for the next interval:")
     print("===================================")
     print(f"{task['name']}")
     print("===================================")
