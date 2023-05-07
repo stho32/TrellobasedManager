@@ -1,4 +1,5 @@
 import argparse
+import random
 import time
 from datetime import datetime, timedelta
 import pyttsx3
@@ -23,8 +24,12 @@ def select_and_print_task(config, args):
         return False
 
     random_task = select_random_task(tasks)
+    alternative_tasks = [task for task in tasks if task != random_task]
+    random.shuffle(alternative_tasks)
+    alternative_tasks = alternative_tasks[:2]  # Select two alternative tasks
+
     next_time = datetime.now() + timedelta(minutes=args.work_duration)
-    print_task(random_task, next_time)
+    print_task(random_task, next_time, alternative_tasks)
     return True
 
 
