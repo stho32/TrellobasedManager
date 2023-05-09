@@ -2,6 +2,7 @@ import argparse
 import random
 import time
 from datetime import datetime, timedelta
+from chatgpt import send_prompt_to_gpt
 from output_utils import print_and_speak
 from task_utils import print_task, select_random_task
 from trello_utils import load_config, get_tasks, get_board_id, get_list_id, delete_card
@@ -32,6 +33,14 @@ def select_and_print_task(config, args):
 
     next_time = datetime.now() + timedelta(minutes=args.work_duration)
     print_task(random_task, next_time, alternative_tasks)
+
+    intel = send_prompt_to_gpt(
+        "Consider this task: ```"
+        + random_task["name"]
+        + "``` What would you do to solve the task?"
+    )
+    print_and_speak(intel)
+
     return True, random_task
 
 

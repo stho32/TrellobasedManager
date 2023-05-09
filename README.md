@@ -10,6 +10,7 @@ To get started, first install the required dependencies:
 pip install requests
 pip install pygame
 pip install pyttsx3
+pip install openai
 ```
 
 ## Sound
