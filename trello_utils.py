@@ -1,6 +1,8 @@
 import json
 import requests
 
+from output_utils import print_and_speak
+
 
 BASE_URL = "https://api.trello.com/1"
 
@@ -52,3 +54,21 @@ def get_tasks(config):
     url = f"{BASE_URL}/lists/{list_id}/cards?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
     return response.json()
+
+
+def delete_card(config, card_id):
+    api_key = config["API_KEY"]
+    api_token = config["TOKEN"]
+
+    url = f"https://api.trello.com/1/cards/{card_id}"
+
+    headers = {"Accept": "application/json"}
+
+    query = {"key": api_key, "token": api_token}
+
+    response = requests.request("DELETE", url, headers=headers, params=query)
+
+    if response.status_code == 200:
+        print_and_speak("Task deleted successfully.")
+    else:
+        print_and_speak("Failed to delete the task.")
