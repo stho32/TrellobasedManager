@@ -63,10 +63,7 @@ def main():
             print_and_speak(work_message)
             time.sleep(args.work_duration * 60)  # Sleep for the specified work duration
 
-            break_message = (
-                f"Time for feedback and a {args.break_duration} minute break."
-            )
-            print_and_speak(break_message)
+            print_and_speak("Time for feedback.")
             play_mp3_async(
                 "Rooster_Crowing-SoundBible.com-43612401.mp3"
             )  # Play the rooster crowing sound
@@ -74,6 +71,15 @@ def main():
             completed = ask_if_task_completed()
             if completed:
                 delete_card(config, current_task["id"])
+
+            break_message = f"Time for a {args.break_duration} minute break."
+            print_and_speak(break_message)
+
+            next_task_time = datetime.now() + timedelta(minutes=args.break_duration)
+            next_task_message = (
+                f"Next task will be published at {next_task_time.strftime('%H:%M:%S')}."
+            )
+            print_and_speak(next_task_message)
 
             time.sleep(
                 args.break_duration * 60
