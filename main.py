@@ -56,40 +56,33 @@ def main():
 
     config = load_config()
 
-    if args.work_duration is not None:
-        while True:
-            task_found, current_task = select_and_print_task(config, args)
-            if task_found:
-                work_message = f"Working on the task for {args.work_duration} minutes."
-                print_and_speak(work_message)
-                time.sleep(
-                    args.work_duration * 60
-                )  # Sleep for the specified work duration
+    while True:
+        task_found, current_task = select_and_print_task(config, args)
+        if task_found:
+            work_message = f"Working on the task for {args.work_duration} minutes."
+            print_and_speak(work_message)
+            time.sleep(args.work_duration * 60)  # Sleep for the specified work duration
 
-                break_message = (
-                    f"Time for feedback and a {args.break_duration} minute break."
-                )
-                print_and_speak(break_message)
-                play_mp3_async(
-                    "Rooster_Crowing-SoundBible.com-43612401.mp3"
-                )  # Play the rooster crowing sound
+            break_message = (
+                f"Time for feedback and a {args.break_duration} minute break."
+            )
+            print_and_speak(break_message)
+            play_mp3_async(
+                "Rooster_Crowing-SoundBible.com-43612401.mp3"
+            )  # Play the rooster crowing sound
 
-                completed = ask_if_task_completed()
-                if completed:
-                    delete_card(config, current_task["id"])
+            completed = ask_if_task_completed()
+            if completed:
+                delete_card(config, current_task["id"])
 
-                time.sleep(
-                    args.break_duration * 60
-                )  # Sleep for the specified break duration
+            time.sleep(
+                args.break_duration * 60
+            )  # Sleep for the specified break duration
 
-            else:
-                retry_message = f"Retrying in {args.work_duration} minutes."
-                print_and_speak(retry_message)
-                time.sleep(
-                    args.work_duration * 60
-                )  # Sleep for the specified work duration
-    else:
-        select_and_print_task(config, args)
+        else:
+            retry_message = f"Retrying in {args.work_duration} minutes."
+            print_and_speak(retry_message)
+            time.sleep(args.work_duration * 60)  # Sleep for the specified work duration
 
 
 if __name__ == "__main__":
