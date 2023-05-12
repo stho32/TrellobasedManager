@@ -34,6 +34,7 @@ def select_and_print_task(config, args):
     next_time = datetime.now() + timedelta(minutes=args.work_duration)
     print_task(random_task, next_time, alternative_tasks)
 
+    print_and_speak("Your task is:" + random_task["name"])
     intel = send_prompt_to_gpt(
         "Consider this task: ```"
         + random_task["name"]
