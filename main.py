@@ -38,7 +38,7 @@ def select_and_print_task(config, args):
     intel = send_prompt_to_gpt(
         "Consider this task: ```"
         + random_task["name"]
-        + "``` What would you do to solve the task?"
+        + "``` Which steps do you recommend to solve this task?"
     )
     print_and_speak(intel)
 
