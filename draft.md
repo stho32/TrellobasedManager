@@ -7,8 +7,9 @@
         - [X] Extract the while loop from main as an own function "work".
 
     - [X] add a parameter --work for the old action
-    - [ ] add a new parameter --cleanup that will start the new action
-    - [ ] get all tasks from all 3 lists
+    - [X] add a new parameter --cleanup that will start the new action
+
+    - [ ] get all tasks from all lists
     - [ ] ask for all tasks
         - [ ] To which of the following lists does this task belong? 1. 2. 3... or d-> delete task
         - [ ] move task accordingly
