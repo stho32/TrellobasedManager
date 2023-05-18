@@ -9,7 +9,8 @@
     - [X] add a parameter --work for the old action
     - [X] add a new parameter --cleanup that will start the new action
 
-    - [ ] get all tasks from all lists
+    - [X] get all tasks from all lists
+    - [ ] get a list of all lists that exist in the board
     - [ ] ask for all tasks
         - [ ] To which of the following lists does this task belong? 1. 2. 3... or d-> delete task
         - [ ] move task accordingly
