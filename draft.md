@@ -1,6 +1,6 @@
 # Draft notes
 
-- [ ] add a mode in which tasks are bumped to another column based on answer
+- [X] add a mode in which tasks are bumped to another column based on answer
 
     - [X] move the task performing out into another file
         - [X] Please extract everything that performs the action into a separate python file.
@@ -17,4 +17,5 @@
         - [X] The selection of a number means that the program should move the task into the specified list.
         - [X] Pressing d means, that the task can be deleted
         - [X] No input means that the loop should stop here
+
 
