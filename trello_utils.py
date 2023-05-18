@@ -72,3 +72,15 @@ def delete_card(config, card_id):
         print_and_speak("Task deleted successfully.")
     else:
         print_and_speak("Failed to delete the task.")
+
+
+def get_all_tasks(config):
+    board_id = get_board_id(config, config["board_name"])
+
+    if not board_id:
+        print(f"No board found with the name '{config['board_name']}'.")
+        return []
+
+    url = f"{BASE_URL}/boards/{board_id}/cards?key={config['API_KEY']}&token={config['TOKEN']}"
+    response = requests.get(url)
+    return response.json()

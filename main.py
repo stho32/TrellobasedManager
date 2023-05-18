@@ -4,7 +4,12 @@ from trello_utils import load_config
 
 
 def cleanup(config, args):
-    pass
+    all_tasks = get_all_tasks(config)
+
+    if not all_tasks:
+        print("No tasks found.")
+        return
+    # Further processing of tasks...
 
 
 def main():
