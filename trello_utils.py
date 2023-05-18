@@ -84,3 +84,15 @@ def get_all_tasks(config):
     url = f"{BASE_URL}/boards/{board_id}/cards?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
     return response.json()
+
+
+def get_all_lists(config):
+    board_id = get_board_id(config, config["board_name"])
+
+    if not board_id:
+        print(f"No board found with the name '{config['board_name']}'.")
+        return []
+
+    url = f"{BASE_URL}/boards/{board_id}/lists?key={config['API_KEY']}&token={config['TOKEN']}"
+    response = requests.get(url)
+    return response.json()

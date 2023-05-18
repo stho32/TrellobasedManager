@@ -1,6 +1,6 @@
 import argparse
 from performing_tasks import perform_work
-from trello_utils import load_config
+from trello_utils import get_all_lists, get_all_tasks, load_config
 
 
 def cleanup(config, args):
@@ -8,6 +8,12 @@ def cleanup(config, args):
 
     if not all_tasks:
         print("No tasks found.")
+        return
+
+    all_lists = get_all_lists(config)
+
+    if not all_lists:
+        print("No lists found.")
         return
     # Further processing of tasks...
 
