@@ -1,81 +1,80 @@
-# Trello Task Manager
+Sure, here's the updated README.md content with information from the old README.
 
-Trello Task Manager is a simple Python script that selects a random task from a specified Trello list and displays it for you. It can be run with a customizable work duration and break duration, playing a gong sound when a new task starts and a rooster crowing sound when the break starts. The tool is designed to help improve focus and productivity by providing a clear and randomized task to work on.
+```markdown
+# TrellobasedManager
+
+TrellobasedManager is a Python application that helps to improve your productivity by interacting with your Trello board. The tool performs in two modes:
+
+1. **Work mode**: The application randomly selects tasks from a specific Trello list for you to work on. Upon task completion, the task will be deleted from the Trello board. You can customize the duration of work on each task and the break time between tasks. When a new task starts, a gong sound will play, and when the break starts, you will hear a rooster crowing sound.
+
+2. **Cleanup mode**: The application provides a way to manage your tasks across all lists on your Trello board. You can move tasks between lists, delete tasks, or stop the cleanup process at any time.
 
 ## Installation
 
-To get started, first install the required dependencies:
+To get started, first clone this repository and then install the required dependencies:
 
-```
-pip install requests
-pip install pygame
-pip install pyttsx3
-pip install openai
+```bash
+pip install -r requirements.txt
 ```
 
 ## Sound
 
 ### Gong Sound
 
-This project uses a gong sound by Daniel Simon, licensed under CC BY 3.0. You can find the source and license details below:
+This project uses a gong sound by Daniel Simon, licensed under CC BY 3.0:
 
 - Gong sound by Daniel Simon is licensed under Attribution 3.0.
-- Source: [https://soundbible.com/2148-Chinese-Gong.html](https://soundbible.com/2148-Chinese-Gong.html)
-- License: [https://creativecommons.org/licenses/by/3.0/](https://creativecommons.org/licenses/by/3.0/)
+- Source: [Gong Sound](https://soundbible.com/2148-Chinese-Gong.html)
+- License: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
 
 ### Rooster Sound
 
 - Rooster Crowing sound by Mike Koenig is licensed under Attribution 3.0.
-- Source: [https://soundbible.com/1134-Rooster-Crowing.html](https://soundbible.com/1134-Rooster-Crowing.html)
-- License: [https://creativecommons.org/licenses/by/3.0/](https://creativecommons.org/licenses/by/3.0/)
+- Source: [Rooster Crowing Sound](https://soundbible.com/1134-Rooster-Crowing.html)
+- License: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
 
 ## Usage
 
-The main script is `main.py`. To run it, simply execute the following command in your terminal:
-
-```
-python main.py --work-duration MINUTES
-```
-
-Replace `MINUTES` with the desired work duration in minutes for each task.
-
-To add a break after each task, use the `--break-duration` flag:
-
-```
-python main.py --work-duration MINUTES --break-duration MINUTES
-```
-
-Replace the second `MINUTES` with the desired break duration in minutes after each task.
-
-In this mode, the script will continuously select a new task after the specified work duration, play the gong sound as an alarm, and then take a break for the specified break duration while playing a rooster crowing sound.
-
-## Configuration
-
-To configure the script to work with your Trello account, create a `config.json` file in the same directory as the `main.py` script with the following format:
+Firstly, you need to set up your Trello API Key and Token in a `config.json` file in the root directory of the application:
 
 ```json
 {
-  "API_KEY": "your_trello_api_key",
-  "TOKEN": "your_trello_token",
-  "board_name": "your_board_name",
-  "list_name": "your_list_name"
+    "API_KEY": "your_trello_api_key",
+    "TOKEN": "your_trello_api_token",
+    "board_name": "your_trello_board_name",
+    "list_name": "your_trello_list_name_for_work_mode"
 }
 ```
 
-Replace the placeholders with your Trello API key, token, and the names of the board and list you want to use.
+To start the application in work mode, use the following command:
 
-For information on how to obtain your Trello API key and token, refer to the [Trello API documentation](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/#authentication-and-authorization).
+```bash
+python main.py --perform --work-duration <work_minutes> --break-duration <break_minutes>
+```
+
+To start the application in cleanup mode, use the following command:
+
+```bash
+python main.py --cleanup
+```
 
 ## Repository Structure
 
-The repository is organized into the following files and directories:
+The repository consists of the following files and directories:
 
-- `main.py`: The main script that selects and displays tasks.
-- `task_utils.py`: Contains functions related to selecting and displaying tasks.
+- `main.py`: The main script to start the application.
+- `performing_tasks.py`: Contains functions related to working with tasks.
 - `trello_utils.py`: Contains functions for interacting with the Trello API.
-- `sound_utils.py`: Contains the `play_mp3_async` function for playing MP3 files asynchronously.
+- `output_utils.py`: Contains functions for clearing the console and printing and speaking text.
 - `Sounds`: A directory containing the gong sound file (`chinese-gong-daniel_simon.mp3`) and the rooster crowing sound file (`Rooster_Crowing-SoundBible.com-43612401.mp3`).
 
 ## Contributing
 
-Feel free to submit issues or pull requests to improve the tool.
+Feel free to submit issues or pull requests to improve this tool.
+
+## License
+
+This project is licensed under the terms of the MIT license.
+```
+
+Remember to replace placeholders in the "Usage" section with actual values.
