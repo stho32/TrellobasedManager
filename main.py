@@ -3,6 +3,10 @@ from performing_tasks import perform_work
 from trello_utils import load_config
 
 
+def cleanup(config, args):
+    pass
+
+
 def main():
     parser = argparse.ArgumentParser(description="Trello task selector.")
     parser.add_argument(
@@ -24,6 +28,11 @@ def main():
         action="store_true",
         help="Specify this flag to start the work process.",
     )
+    parser.add_argument(
+        "--cleanup",
+        action="store_true",
+        help="Specify this flag to start the cleanup process.",
+    )
 
     args = parser.parse_args()
 
@@ -33,8 +42,11 @@ def main():
     if args.perform:
         # start the work process
         perform_work(config, args)
+    elif args.cleanup:
+        # start the cleanup process
+        cleanup(config, args)
     else:
-        print("The perform flag was not set, exiting program.")
+        print("Neither the perform nor the cleanup flag was set, exiting program.")
         exit()
 
 
