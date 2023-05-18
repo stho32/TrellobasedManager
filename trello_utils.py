@@ -111,6 +111,6 @@ def move_card(config, card_id, target_list_id):
     response = requests.request("PUT", url, headers=headers, params=query)
 
     if response.status_code == 200:
-        print_and_speak("Task moved successfully.")
+        print("Task moved successfully.")
     else:
-        print_and_speak("Failed to move the task.")
+        print("Failed to move the task.")
