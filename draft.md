@@ -10,7 +10,11 @@
     - [X] add a new parameter --cleanup that will start the new action
 
     - [X] get all tasks from all lists
-    - [ ] get a list of all lists that exist in the board
-    - [ ] ask for all tasks
-        - [ ] To which of the following lists does this task belong? 1. 2. 3... or d-> delete task
-        - [ ] move task accordingly
+    - [X] get a list of all lists that exist in the board
+    - [X] go through all tasks in random order:
+        - [X] for each task give the user a list of the lists and another option d in a menu. 
+        - [X] for simplicity the list of the lists should be enumerated, so the user can select a specific list by just giving you a number
+        - [X] The selection of a number means that the program should move the task into the specified list.
+        - [X] Pressing d means, that the task can be deleted
+        - [X] No input means that the loop should stop here
+

@@ -96,3 +96,21 @@ def get_all_lists(config):
     url = f"{BASE_URL}/boards/{board_id}/lists?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
     return response.json()
+
+
+def move_card(config, card_id, target_list_id):
+    api_key = config["API_KEY"]
+    api_token = config["TOKEN"]
+
+    url = f"https://api.trello.com/1/cards/{card_id}"
+
+    headers = {"Accept": "application/json"}
+
+    query = {"key": api_key, "token": api_token, "idList": target_list_id}
+
+    response = requests.request("PUT", url, headers=headers, params=query)
+
+    if response.status_code == 200:
+        print_and_speak("Task moved successfully.")
+    else:
+        print_and_speak("Failed to move the task.")
