@@ -19,13 +19,23 @@ def main():
         default=5,
         help="Specify the break duration in minutes after each task.",
     )
+    parser.add_argument(
+        "--perform",
+        action="store_true",
+        help="Specify this flag to start the work process.",
+    )
 
     args = parser.parse_args()
 
     config = load_config()
 
-    # start the work process
-    perform_work(config, args)
+    # check if the perform flag is set
+    if args.perform:
+        # start the work process
+        perform_work(config, args)
+    else:
+        print("The perform flag was not set, exiting program.")
+        exit()
 
 
 if __name__ == "__main__":
