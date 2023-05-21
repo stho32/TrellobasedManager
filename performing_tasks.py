@@ -4,17 +4,9 @@ import time
 from chatgpt import send_prompt_to_gpt
 from output_utils import print_and_speak
 from task_utils import print_task, select_random_task
-from trello_utils import load_config, get_tasks, delete_card
+from trello_utils import get_all_lists, load_config, get_tasks, delete_card
 from sound_utils import play_mp3_async
-
-
-def ask_if_task_completed():
-    while True:
-        response = input("Did you complete the task? (yes/no): ").lower()
-        if response in ["yes", "no"]:
-            return response == "yes"
-        else:
-            print_and_speak("Invalid response. Please answer with 'yes' or 'no'.")
+from feedback import user_input_menu
 
 
 def select_and_print_task(config, args):
@@ -51,6 +43,8 @@ def select_and_print_task(config, args):
 
 
 def perform_work(config, args):
+    all_lists = get_all_lists(config)
+
     while True:
         task_found, current_task = select_and_print_task(config, args)
         if task_found:
@@ -63,9 +57,7 @@ def perform_work(config, args):
                 "Rooster_Crowing-SoundBible.com-43612401.mp3"
             )  # Play the rooster crowing sound
 
-            completed = ask_if_task_completed()
-            if completed:
-                delete_card(config, current_task["id"])
+            user_input_menu(current_task, all_lists, config)
 
             break_message = f"Time for a {args.break_duration} minute break."
             print_and_speak(break_message)

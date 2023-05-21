@@ -1,4 +1,5 @@
 import argparse
+from feedback import user_input_menu
 from performing_tasks import perform_work
 from trello_utils import (
     delete_card,
@@ -26,26 +27,9 @@ def cleanup(config, args):
     random.shuffle(all_tasks)
 
     for task in all_tasks:
-        print(f"\nTask: {task['name']}")
-
-        for i, list_obj in enumerate(all_lists, start=1):
-            print(f"{i}. {list_obj['name']}")
-
-        print("d. Delete task")
-        print("Press Enter to stop.\n")
-
-        user_input = input("Choose an option: ")
-
-        if user_input == "d":
-            delete_card(config, task["id"])
-        elif user_input.isdigit():
-            list_index = int(user_input) - 1
-            if 0 <= list_index < len(all_lists):
-                move_card(config, task["id"], all_lists[list_index]["id"])
-        elif user_input == "":
+        should_continue = user_input_menu(task, all_lists, config)
+        if not should_continue:
             break
-        else:
-            print("Invalid option. Skipping this task.")
 
 
 def main():
