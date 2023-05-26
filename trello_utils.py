@@ -69,9 +69,9 @@ def delete_card(config, card_id):
     response = requests.request("DELETE", url, headers=headers, params=query)
 
     if response.status_code == 200:
-        print_and_speak("Task deleted successfully.")
+        print("Task deleted successfully.")
     else:
-        print_and_speak("Failed to delete the task.")
+        print("Failed to delete the task.")
 
 
 def get_all_tasks(config):
