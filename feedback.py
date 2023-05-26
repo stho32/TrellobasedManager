@@ -14,7 +14,7 @@ def user_input_menu(task, all_lists, config):
 
     if user_input == "d":
         delete_card(config, task["id"])
-        return False
+        return True
     elif user_input.isdigit():
         list_index = int(user_input) - 1
         if 0 <= list_index < len(all_lists):
