@@ -38,17 +38,17 @@ def get_list_id(config, board_id, list_name):
     return None
 
 
-def get_tasks(config):
+def get_tasks(config, list_name):
     board_id = get_board_id(config, config["board_name"])
 
     if not board_id:
         print(f"No board found with the name '{config['board_name']}'.")
         return []
 
-    list_id = get_list_id(config, board_id, config["list_name"])
+    list_id = get_list_id(config, board_id, list_name)
 
     if not list_id:
-        print(f"No list found with the name '{config['list_name']}'.")
+        print(f"No list found with the name '{list_name}'.")
         return []
 
     url = f"{BASE_URL}/lists/{list_id}/cards?key={config['API_KEY']}&token={config['TOKEN']}"
@@ -74,7 +74,7 @@ def delete_card(config, card_id):
         print("Failed to delete the task.")
 
 
-def get_all_tasks(config):
+def get_all_tasks(config, exclude_lists=None):
     board_id = get_board_id(config, config["board_name"])
 
     if not board_id:
@@ -83,7 +83,38 @@ def get_all_tasks(config):
 
     url = f"{BASE_URL}/boards/{board_id}/cards?key={config['API_KEY']}&token={config['TOKEN']}"
     response = requests.get(url)
-    return response.json()
+    tasks = response.json()
+
+    # Exclude tasks from specified lists
+    if exclude_lists:
+        tasks = exclude_tasks_from_lists(config, tasks, exclude_lists)
+
+    return tasks
+
+
+def exclude_tasks_from_lists(config, tasks, exclude_lists):
+    """
+    Exclude tasks from specified lists.
+    """
+    board_id = get_board_id(config, config["board_name"])
+    
+    if not board_id:
+        print(f"No board found with the name '{config['board_name']}'.")
+        return tasks
+    
+    # Get IDs of lists to exclude
+    exclude_list_ids = []
+    for list_name in exclude_lists:
+        list_id = get_list_id(config, board_id, list_name)
+        exclude_list_ids.append(list_id)
+    
+    # Exclude tasks from specified lists
+    filtered_tasks = []
+    for task in tasks:
+        if task['idList'] not in exclude_list_ids:
+            filtered_tasks.append(task)
+    
+    return filtered_tasks
 
 
 def get_all_lists(config):

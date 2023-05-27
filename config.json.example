@@ -3,5 +3,6 @@
   "TOKEN": "your_trello_token",
   "board_name": "your_board_name",
   "list_name": "your_list_name",
+  "planning_activities_list_name": "your_activities_planning_list_name",
   "GPT_API_KEY": "your_gpt3.5_api_key"
 }

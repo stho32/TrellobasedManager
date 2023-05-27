@@ -11,7 +11,7 @@ from feedback import user_input_menu
 
 def select_and_print_task(config, args):
     play_mp3_async("chinese-gong-daniel_simon.mp3")
-    tasks = get_tasks(config)
+    tasks = get_tasks(config, config["list_name"])
 
     if not tasks:
         print_and_speak("No tasks found.")
