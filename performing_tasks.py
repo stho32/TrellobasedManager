@@ -4,14 +4,14 @@ import time
 from chatgpt import send_prompt_to_gpt
 from output_utils import print_and_speak
 from task_utils import print_task, select_random_task
-from trello_utils import get_all_lists, load_config, get_tasks, delete_card
+from trello_utils import get_all_lists, get_tasks
 from sound_utils import play_mp3_async
 from feedback import user_input_menu
 
 
-def select_and_print_task(config, args):
+def select_and_print_task(config, args, list_name):
     play_mp3_async("chinese-gong-daniel_simon.mp3")
-    tasks = get_tasks(config, config["list_name"])
+    tasks = get_tasks(config, list_name)
 
     if not tasks:
         print_and_speak("No tasks found.")
@@ -42,11 +42,11 @@ def select_and_print_task(config, args):
     return True, random_task
 
 
-def perform_work(config, args):
+def perform_work(config, args, list_name):
     all_lists = get_all_lists(config)
 
     while True:
-        task_found, current_task = select_and_print_task(config, args)
+        task_found, current_task = select_and_print_task(config, args, list_name)
         if task_found:
             work_message = f"Working on the task for {args.work_duration} minutes."
             print_and_speak(work_message)

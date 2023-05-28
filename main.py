@@ -32,6 +32,11 @@ def main():
         action="store_true",
         help="Specify this flag to start the cleanup process.",
     )
+    parser.add_argument(
+        "--list-name",
+        type=str,
+        help="Specify the name of the list to perform tasks on, only used with --perform flag.",
+    )
 
     args = parser.parse_args()
 
@@ -39,8 +44,12 @@ def main():
 
     # check if the perform flag is set
     if args.perform:
+        list_name = args.list_name
+        if (args.list_name is None):
+            list_name = config["list_name"]
+        
         # start the work process
-        perform_work(config, args)
+        perform_work(config, args, list_name)
     elif args.cleanup:
         # start the cleanup process
         cleanup(config, args)
