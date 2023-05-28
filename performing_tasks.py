@@ -37,7 +37,7 @@ def select_and_print_task(config, args, list_name):
         + task_in_english
         + "``` Which steps do you recommend to solve this task?"
     )
-    print_and_speak(intel)
+    print(intel)
 
     return True, random_task
 
