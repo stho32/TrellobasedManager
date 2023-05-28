@@ -15,4 +15,4 @@ def send_prompt_to_gpt(prompt, model="text-davinci-002"):
         temperature=0.8,
     )
 
-    return response.choices[0].text.strip()
+    return response.choices[0].text.strip() # type: ignore
