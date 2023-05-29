@@ -42,17 +42,11 @@ def select_and_print_task(config, args, list_name):
     return True, random_task
 
 
-def perform_work(config, args, list_name, rounds : int):
+def perform_work(config, args, list_name, rounds: int):
     all_lists = get_all_lists(config)
-    round = rounds;
+    round = rounds
 
     while True:
-
-        round -= 1
-        if round == 0:
-            print_and_speak("Finished all rounds.")
-            break
-
         task_found, current_task = select_and_print_task(config, args, list_name)
         if task_found:
             work_message = f"Working on the task for {args.work_duration} minutes."
@@ -83,3 +77,8 @@ def perform_work(config, args, list_name, rounds : int):
             retry_message = f"Retrying in {args.work_duration} minutes."
             print_and_speak(retry_message)
             time.sleep(args.work_duration * 60)  # Sleep for the specified work duration
+
+        round -= 1
+        if round == 0:
+            print_and_speak("Finished all rounds.")
+            break
