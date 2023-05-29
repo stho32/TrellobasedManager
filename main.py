@@ -37,6 +37,12 @@ def main():
         type=str,
         help="Specify the name of the list to perform tasks on, only used with --perform flag.",
     )
+    parser.add_argument(
+        "--rounds",
+        type=int,
+        default=999,
+        help="Specify the number of rounds to perform tasks, only used with --perform flag.",
+    )
 
     args = parser.parse_args()
 
@@ -49,7 +55,7 @@ def main():
             list_name = config["list_name"]
         
         # start the work process
-        perform_work(config, args, list_name)
+        perform_work(config, args, list_name, args.rounds)
     elif args.cleanup:
         # start the cleanup process
         cleanup(config, args)

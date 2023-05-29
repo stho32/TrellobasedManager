@@ -42,10 +42,17 @@ def select_and_print_task(config, args, list_name):
     return True, random_task
 
 
-def perform_work(config, args, list_name):
+def perform_work(config, args, list_name, rounds : int):
     all_lists = get_all_lists(config)
+    round = rounds;
 
     while True:
+
+        round -= 1
+        if round == 0:
+            print_and_speak("Finished all rounds.")
+            break
+
         task_found, current_task = select_and_print_task(config, args, list_name)
         if task_found:
             work_message = f"Working on the task for {args.work_duration} minutes."
