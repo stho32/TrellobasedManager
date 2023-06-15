@@ -52,7 +52,7 @@ def main():
         help="Specify this flag to start the program in simple mode.",
     )
 
-    args = parser.add_argument()
+    args = parser.parse_args()
 
     config = load_config()
 
