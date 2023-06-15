@@ -56,17 +56,16 @@ def main():
 
     config = load_config()
 
-    if args.perform:
-        list_name = args.list_name
-        if args.list_name is None:
-            list_name = config["list_name"]
+    list_name = args.list_name
+    if args.list_name is None:
+        list_name = config["list_name"]
 
+    if args.perform:
         perform_work(config, args, list_name, args.rounds)
     elif args.cleanup:
         cleanup(config, args)
     elif args.simple:
-        # start the simple process
-        simple_mode(config, args)
+        simple_mode(config, list_name)
     else:
         print(
             "Neither the perform nor the cleanup flag nor the simple flag was set, exiting program."

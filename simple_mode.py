@@ -1,14 +1,14 @@
 from feedback import user_input_menu
-from trello_utils import get_all_tasks, get_all_lists
+from trello_utils import *
 import random
 
 
-def simple_mode(config, args):
+def simple_mode(config, list_name):
     print("Starting simple mode.")
-    update_task_positions_or_delete(config)
+    update_task_positions_or_delete(config, list_name)
 
 
-def update_task_positions_or_delete(config):
+def update_task_positions_or_delete(config, list_name):
     all_lists = get_all_lists(config)
 
     if not all_lists:
@@ -16,9 +16,7 @@ def update_task_positions_or_delete(config):
         return
 
     while True:
-        all_tasks = get_all_tasks(
-            config, exclude_lists=[config["planning_activities_list_name"]]
-        )
+        all_tasks = get_tasks(config, list_name)
 
         if not all_tasks:
             print("No tasks found.")
