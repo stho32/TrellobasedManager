@@ -4,6 +4,9 @@ from performing_tasks import perform_work
 from trello_utils import (
     load_config,
 )
+from simple_mode import (
+    simple_mode,
+)  # make sure you define what simple_mode does in the simple_mode module
 
 
 def main():
@@ -43,24 +46,31 @@ def main():
         default=999,
         help="Specify the number of rounds to perform tasks, only used with --perform flag.",
     )
+    parser.add_argument(
+        "--simple",
+        action="store_true",
+        help="Specify this flag to start the program in simple mode.",
+    )
 
-    args = parser.parse_args()
+    args = parser.add_argument()
 
     config = load_config()
 
-    # check if the perform flag is set
     if args.perform:
         list_name = args.list_name
-        if (args.list_name is None):
+        if args.list_name is None:
             list_name = config["list_name"]
-        
-        # start the work process
+
         perform_work(config, args, list_name, args.rounds)
     elif args.cleanup:
-        # start the cleanup process
         cleanup(config, args)
+    elif args.simple:
+        # start the simple process
+        simple_mode(config, args)
     else:
-        print("Neither the perform nor the cleanup flag was set, exiting program.")
+        print(
+            "Neither the perform nor the cleanup flag nor the simple flag was set, exiting program."
+        )
         exit()
 
 
