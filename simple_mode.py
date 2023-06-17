@@ -22,7 +22,10 @@ def update_task_positions_or_delete(config, list_name):
             print("No tasks found.")
             return
 
+        print(f"Remaining tasks: {len(all_tasks) - 1}")
+
         task = random.choice(all_tasks)
         should_continue = user_input_menu(task, all_lists, config)
+
         if not should_continue:
             break
