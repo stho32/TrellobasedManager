@@ -1,4 +1,6 @@
 import argparse
+from datetime import datetime
+import time
 from cleaning_up import cleanup
 from performing_tasks import perform_work
 from configuration import load_config
@@ -18,7 +20,12 @@ def send_sms_with_task(config):
     token = config["SIPGATE_TOKEN"]
     recipient = config["SMS_RECEIPIENT"]
 
-    message = "Please work on the task: " + task["name"]
+    # Add current date and time to message
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    message = f"Please work on the task: {task['name']}. Time sent: {current_time}"
+
+    print(f"Sending message: {message}")  # Log the message to the screen
+
     send_sms(token_id, token, recipient, message)
 
 
@@ -85,7 +92,9 @@ def main():
     elif args.simple:
         simple_mode(config, list_name)
     elif args.sms:
-        send_sms_with_task(config)
+        while True:  # Create an infinite loop
+            send_sms_with_task(config)
+            time.sleep(1800)  # Pause for 1800 seconds (30 minutes)
     else:
         print(
             "Neither the perform, cleanup, simple, nor sms flag was set, exiting program."
