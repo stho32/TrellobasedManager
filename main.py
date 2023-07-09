@@ -5,7 +5,21 @@ from configuration import load_config
 from simple_mode import simple_mode
 from sms_interface import (
     send_sms,
+)
+from trello_utils import (
+    get_random_task,
 )  # make sure you define what simple_mode does in the simple_mode module
+
+
+def send_sms_with_task(config):
+    task = get_random_task(config, config["list_name"])
+
+    token_id = config["SIPGATE_TOKENID"]
+    token = config["SIPGATE_TOKEN"]
+    recipient = config["SMS_RECEIPIENT"]
+
+    message = "Please work on the task: " + task["name"]
+    send_sms(token_id, token, recipient, message)
 
 
 def main():
@@ -71,12 +85,7 @@ def main():
     elif args.simple:
         simple_mode(config, list_name)
     elif args.sms:
-        token_id = config["SIPGATE_TOKENID"]
-        token = config["SIPGATE_TOKEN"]
-        recipient = config["SMS_RECEIPIENT"]
-
-        message = "Please work on the task: "
-        send_sms(token_id, token, recipient, message)
+        send_sms_with_task(config)
     else:
         print(
             "Neither the perform, cleanup, simple, nor sms flag was set, exiting program."

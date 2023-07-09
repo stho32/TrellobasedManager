@@ -1,4 +1,5 @@
 import json
+import random
 import requests
 
 from output_utils import print_and_speak
@@ -31,6 +32,16 @@ def get_list_id(config, board_id, list_name):
             return list_obj["id"]
 
     return None
+
+
+def get_random_task(config, list_name):
+    tasks = get_tasks(config, list_name)
+    if not tasks:
+        print(f"No tasks found in the list '{list_name}'.")
+        return None
+
+    task = random.choice(tasks)
+    return task
 
 
 def get_tasks(config, list_name):
