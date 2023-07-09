@@ -23,19 +23,9 @@ def send_sms(token_id, token, recipient, message, send_at=None):
         url, headers=headers, auth=(token_id, token), data=json.dumps(data)
     )
 
-    if response.status_code != 200:
-        print(f"Failed to send SMS: {response.content}")
+    if response.status_code // 100 == 2:
+        print(f"SMS sent successfully. Status: {response.status_code}")
     else:
-        print(
-            f"SMS sent successfully. Status: {response.status_code}, Body: {response.json()}"
-        )
+        print(f"Failed to send SMS. Status: {response.status_code}")
 
     return response
-
-
-# Example usage:
-# token_id = "YOUR_TOKEN_ID"
-# token = "YOUR_TOKEN"
-# recipient = "YOUR_RECIPIENT_NUMBER"
-# message = "YOUR_MESSAGE"
-# send_sms(token_id, token, recipient, message)
