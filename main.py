@@ -1,11 +1,10 @@
 import argparse
 from cleaning_up import cleanup
 from performing_tasks import perform_work
-from trello_utils import (
-    load_config,
-)
-from simple_mode import (
-    simple_mode,
+from configuration import load_config
+from simple_mode import simple_mode
+from sms_interface import (
+    send_sms,
 )  # make sure you define what simple_mode does in the simple_mode module
 
 
@@ -51,6 +50,11 @@ def main():
         action="store_true",
         help="Specify this flag to start the program in simple mode.",
     )
+    parser.add_argument(
+        "--sms",
+        action="store_true",
+        help="Specify this flag to send an SMS.",
+    )
 
     args = parser.parse_args()
 
@@ -66,9 +70,16 @@ def main():
         cleanup(config, args)
     elif args.simple:
         simple_mode(config, list_name)
+    elif args.sms:
+        token_id = config["SIPGATE_TOKENID"]
+        token = config["SIPGATE_TOKEN"]
+        recipient = config["SMS_RECEIPIENT"]
+
+        message = "Please work on the task: "
+        send_sms(token_id, token, recipient, message)
     else:
         print(
-            "Neither the perform nor the cleanup flag nor the simple flag was set, exiting program."
+            "Neither the perform, cleanup, simple, nor sms flag was set, exiting program."
         )
         exit()
 

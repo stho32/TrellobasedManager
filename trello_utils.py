@@ -7,11 +7,6 @@ from output_utils import print_and_speak
 BASE_URL = "https://api.trello.com/1"
 
 
-def load_config():
-    with open("config.json", "r") as f:
-        return json.load(f)
-
-
 def get_board_id(config, board_name):
     url = (
         f"{BASE_URL}/members/me/boards?key={config['API_KEY']}&token={config['TOKEN']}"
@@ -97,23 +92,23 @@ def exclude_tasks_from_lists(config, tasks, exclude_lists):
     Exclude tasks from specified lists.
     """
     board_id = get_board_id(config, config["board_name"])
-    
+
     if not board_id:
         print(f"No board found with the name '{config['board_name']}'.")
         return tasks
-    
+
     # Get IDs of lists to exclude
     exclude_list_ids = []
     for list_name in exclude_lists:
         list_id = get_list_id(config, board_id, list_name)
         exclude_list_ids.append(list_id)
-    
+
     # Exclude tasks from specified lists
     filtered_tasks = []
     for task in tasks:
-        if task['idList'] not in exclude_list_ids:
+        if task["idList"] not in exclude_list_ids:
             filtered_tasks.append(task)
-    
+
     return filtered_tasks
 
 
