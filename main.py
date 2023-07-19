@@ -10,10 +10,15 @@ from sms_interface import (
 )
 from trello_utils import (
     get_random_task,
+    check_task_exists,
 )  # make sure you define what simple_mode does in the simple_mode module
 
 
 def send_sms_with_task(config):
+    while check_task_exists(config, "Pause SMS"):  # Check for pause task
+        print("Pause task found, waiting for 60 seconds...")
+        time.sleep(60)  # Wait for 60 seconds
+
     task = get_random_task(config, config["list_name"])
 
     token_id = config["SIPGATE_TOKENID"]

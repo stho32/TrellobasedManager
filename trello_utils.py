@@ -151,3 +151,11 @@ def move_card(config, card_id, target_list_id):
         print("Task moved successfully.")
     else:
         print("Failed to move the task.")
+
+
+def check_task_exists(config, task_name):
+    tasks = get_all_tasks(config)
+    for task in tasks:
+        if task["name"] == task_name:
+            return True
+    return False
