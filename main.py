@@ -9,10 +9,11 @@ from sms_interface import (
     send_sms,
 )
 from trello_utils import (
+    get_board_id,
     get_random_task,
     check_task_exists,
-)  # make sure you define what simple_mode does in the simple_mode module
-
+    move_card, get_list_id
+)
 
 def send_sms_with_task(config):
     while check_task_exists(config, "Pause SMS"):  # Check for pause task
@@ -32,6 +33,14 @@ def send_sms_with_task(config):
     print(f"Sending message: {message}")  # Log the message to the screen
 
     send_sms(token_id, token, recipient, message)
+
+    # Get the id of the "done_list"
+    board_id = get_board_id(config, config["board_name"])
+    done_list_id = get_list_id(config, board_id, config['done_list_name'])
+
+    # Move the task to the "done_list"
+    move_card(config, task['id'], done_list_id)
+
 
 
 def main():

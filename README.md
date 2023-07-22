@@ -1,6 +1,3 @@
-Sure, here's the updated README.md content with information from the old README.
-
-```markdown
 # TrellobasedManager
 
 TrellobasedManager is a Python application that helps to improve your productivity by interacting with your Trello board. The tool performs in two modes:
