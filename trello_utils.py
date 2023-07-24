@@ -159,3 +159,27 @@ def check_task_exists(config, task_name):
         if task["name"] == task_name:
             return True
     return False
+
+def rename_task(config, card_id, new_name):
+    api_key = config["API_KEY"]
+    api_token = config["TOKEN"]
+
+    url = f"{BASE_URL}/cards/{card_id}"
+
+    headers = {"Accept": "application/json"}
+
+    query = {"key": api_key, "token": api_token, "name": new_name}
+
+    response = requests.request("PUT", url, headers=headers, params=query)
+
+    if response.status_code == 200:
+        print(f"Card name updated successfully to '{new_name}'.")
+    else:
+        print(f"Failed to update the card name.")
+
+def get_task_by_name(config, task_name):
+    tasks = get_all_tasks(config)
+    for task in tasks:
+        if task["name"] == task_name:
+            return task
+    return None
