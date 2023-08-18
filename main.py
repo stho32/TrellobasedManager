@@ -15,33 +15,11 @@ from trello_utils import (
     check_task_exists,
     get_task_by_name,
     get_tasks,
-    move_card, get_list_id, rename_task
+    move_card, get_list_id,
+      rename_task_if_about_time
 )
 
-def time_within_range(start, end, now=None):
-    now_time = now or datetime.now().time()
 
-    if start <= end:
-        return start <= now_time <= end
-    else:  # Over midnight
-        return start <= now_time or now_time <= end
-
-def rename_task_if_about_time(config, specified_time, old_name, new_name):
-    # Get current time
-    now = datetime.now().time()
-
-    # Define "about time" as within 5 minutes of the specified time
-    lower_bound = (datetime.combine(datetime.today(), specified_time) - timedelta(minutes=5)).time()
-    upper_bound = (datetime.combine(datetime.today(), specified_time) + timedelta(minutes=5)).time()
-
-    # Check if it is "about time"
-    if time_within_range(lower_bound, upper_bound, now):
-        # Check if the task exists with the old name
-        if check_task_exists(config, old_name):
-            task = get_task_by_name(config, old_name)
-            if task['name'] == old_name:
-                rename_task(config, task['id'], new_name)  # Update the task name
-                print(f"Renamed task from {old_name} to {new_name}")
 
 
 def send_sms_with_task(config):
