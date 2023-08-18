@@ -227,3 +227,104 @@ def time_within_range(start, end, now=None):
     else:  # Over midnight
         return start <= now_time or now_time <= end
 
+def shuffle_tasks_in_list(config, list_name):
+    """
+    Shuffles the order of tasks in a specified list on Trello.
+
+    Args:
+        config (dict): Configuration data including API keys.
+        list_name (str): Name of the list whose tasks are to be shuffled.
+
+    Returns:
+        None
+    """
+    # Get tasks from the specified list
+    tasks = get_tasks(config, list_name)
+
+    if not tasks:
+        print(f"No tasks found in the list '{list_name}'.")
+        return
+
+    # Shuffle tasks locally
+    random.shuffle(tasks)
+
+    # Use the Trello position property to reorder tasks on the board.
+    # Assuming we start at a base position and double it for each card.
+    pos_val = 16384
+
+    for task in tasks:
+        update_card_pos(config, task["id"], pos_val)
+        pos_val *= 2
+
+    print(f"Tasks in the list '{list_name}' have been shuffled successfully.")
+
+
+def update_card_pos(config, card_id, pos_val):
+    """
+    Updates the position (pos) of a card on Trello.
+
+    Args:
+        config (dict): Configuration data including API keys.
+        card_id (str): ID of the card to be updated.
+        pos_val (int): New position value for the card.
+
+    Returns:
+        None
+    """
+    api_key = config["API_KEY"]
+    api_token = config["TOKEN"]
+
+    url = f"{BASE_URL}/cards/{card_id}"
+
+    headers = {"Accept": "application/json"}
+
+    query = {
+        "key": api_key,
+        "token": api_token,
+        "pos": pos_val
+    }
+
+    response = requests.put(url, headers=headers, params=query)
+
+    if response.status_code != 200:
+        print(f"Failed to update the position of card with ID {card_id}.")
+
+def move_task_to_top(config, list_name, task_name):
+    """
+    Moves a specific task to the top of a specified list on Trello.
+
+    Args:
+        config (dict): Configuration data including API keys.
+        list_name (str): Name of the list where the task resides.
+        task_name (str): Name of the task to be moved to the top.
+
+    Returns:
+        None
+    """
+    tasks = get_tasks(config, list_name)
+
+    if not tasks:
+        print(f"No tasks found in the list '{list_name}'.")
+        return
+
+    # Find the task by name
+    task_to_move = None
+    for task in tasks:
+        if task["name"] == task_name:
+            task_to_move = task
+            break
+
+    if not task_to_move:
+        print(f"No task found with the name '{task_name}' in the list '{list_name}'.")
+        return
+
+    # Get the position of the first task in the list
+    top_task_pos = tasks[0]['pos']
+
+    # Adjust the position value slightly lesser than the top task's position
+    new_pos = top_task_pos - 1
+
+    # Update the task's position to move it to the top
+    update_card_pos(config, task_to_move["id"], new_pos)
+
+    print(f"Moved '{task_name}' to the top of the list '{list_name}'.")

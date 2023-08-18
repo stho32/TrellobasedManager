@@ -1,10 +1,10 @@
 import argparse
-from time import sleep
 from modes.cleanup_mode import cleanup
 from modes.perform_mode import perform_work
 from library.configuration import load_config
 from modes.simple_mode import simple_mode
 from modes.sms_mode import sms_mode
+from modes.autocleanup_mode import autocleanup_mode
 
 def main():
     parser = argparse.ArgumentParser(description="Trello task selector.")
@@ -53,6 +53,11 @@ def main():
         action="store_true",
         help="Specify this flag to send an SMS.",
     )
+    parser.add_argument(
+        "--autocleanup",
+        action="store_true",
+        help="Specify this flag to start the auto cleanup process.",
+    )
 
     args = parser.parse_args()
 
@@ -70,12 +75,13 @@ def main():
         simple_mode(config, list_name)
     elif args.sms:
         sms_mode(config)
+    elif args.autocleanup:
+        autocleanup_mode(config)
     else:
         print(
-            "Neither the perform, cleanup, simple, nor sms flag was set, exiting program."
+            "Neither the perform, cleanup, simple, sms, nor autocleanup flag was set, exiting program."
         )
         exit()
-
 
 if __name__ == "__main__":
     main()
