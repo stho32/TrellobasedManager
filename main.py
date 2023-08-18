@@ -1,10 +1,10 @@
 import argparse
 from datetime import datetime, time
 from time import sleep
-from cleanup_mode import cleanup
-from perform_mode import perform_work
+from modes.cleanup_mode import cleanup
+from modes.perform_mode import perform_work
 from library.configuration import load_config
-from simple_mode import simple_mode
+from modes.simple_mode import simple_mode
 from library.sms_interface import (
     send_sms,
 )
