@@ -17,7 +17,7 @@ def send_sms_with_task(config):
         sleep(60)  # Wait for 60 seconds
 
     all_tasks = get_tasks(config, config["done_list_name"])
-    limit = 2
+    limit = 1
     we_have_enough_tasks = len(all_tasks) >= limit
     if we_have_enough_tasks:
         print(f"There are already a lot of tasks in the pipeline, not pushing more for now.")
