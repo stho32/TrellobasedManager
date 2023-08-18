@@ -1,9 +1,10 @@
 from datetime import datetime
-from library.trello_utils import get_all_tasks, get_board_id, move_card, get_list_id, shuffle_tasks_in_list
+from library.trello_utils import get_all_tasks, get_board_id, get_tasks, move_card, get_list_id, reorder_tasks_by_sorted_list, shuffle_tasks_in_list
 
 def autocleanup_mode(config):
     move_tasks_of_the_day_to_todo_list(config)
     shuffle_tasks_in_list(config, config["list_name"])
+    sort_tasks_by_priority(config, config["list_name"])
 
 def move_tasks_of_the_day_to_todo_list(config):
     # Get the current weekday
@@ -33,3 +34,42 @@ def extract_tags(task_name):
         return [tag.strip().lower() for tag in tags_str.split(',')]
     else:
         return []
+
+def extract_priority(task_name):
+    """
+    Extracts the priority number from the task name.
+
+    Args:
+        task_name (str): The name of the task.
+
+    Returns:
+        int: The extracted priority number or 0 if not found.
+    """
+    tags = extract_tags(task_name)
+
+    # Search for the "prio:" tag
+    for tag in tags:
+        if tag.startswith('prio:'):
+            try:
+                return int(tag[5:])  # Extract the integer value after "prio:"
+            except ValueError:  # In case the conversion to integer fails
+                return 0
+
+    return 0
+
+def sort_tasks_by_priority(config, list_name):
+    """
+    Sorts the tasks in the specified list by their priority number in descending order.
+
+    Args:
+        config (dict): Configuration data including API keys.
+        list_name (str): The name of the list to sort tasks.
+
+    Returns:
+        None
+    """
+    tasks = get_tasks(config, list_name)
+    sorted_tasks = sorted(tasks, key=lambda task: extract_priority(task["name"]), reverse=True)
+    
+    # Reorder the tasks based on their sorted order
+    reorder_tasks_by_sorted_list(config, list_name, sorted_tasks)

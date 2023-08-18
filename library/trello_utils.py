@@ -153,7 +153,19 @@ def get_all_lists(config):
     return response.json()
 
 
-def move_card(config, card_id, target_list_id):
+def move_card(config, card_id, target_list_id, pos=None):
+    """
+    Move a card to a specified list and optionally update its position within that list.
+
+    Args:
+        config (dict): Configuration data including API keys.
+        card_id (str): ID of the card to be moved.
+        target_list_id (str): ID of the target list.
+        pos (int, optional): Position within the list. If None, card's position remains unchanged.
+
+    Returns:
+        None
+    """
     api_key = config["API_KEY"]
     api_token = config["TOKEN"]
 
@@ -161,14 +173,25 @@ def move_card(config, card_id, target_list_id):
 
     headers = {"Accept": "application/json"}
 
-    query = {"key": api_key, "token": api_token, "idList": target_list_id}
+    query = {
+        "key": api_key,
+        "token": api_token,
+        "idList": target_list_id
+    }
+    
+    if pos is not None:
+        query["pos"] = pos
 
     response = requests.request("PUT", url, headers=headers, params=query)
 
     if response.status_code == 200:
-        print("Task moved successfully.")
+        if pos is None:
+            print("Task moved successfully.")
+        else:
+            print("Task moved and position updated successfully.")
     else:
         print("Failed to move the task.")
+
 
 
 def check_task_exists(config, task_name):
@@ -328,3 +351,27 @@ def move_task_to_top(config, list_name, task_name):
     update_card_pos(config, task_to_move["id"], new_pos)
 
     print(f"Moved '{task_name}' to the top of the list '{list_name}'.")
+
+def reorder_tasks_by_sorted_list(config, list_name, sorted_tasks):
+    """
+    Reorders the tasks in a Trello list based on a provided sorted list of tasks.
+
+    Args:
+        config (dict): Configuration data including API keys.
+        list_name (str): The name of the list to reorder tasks.
+        sorted_tasks (list): A list of sorted tasks to dictate the new order.
+
+    Returns:
+        None
+    """
+    board_id = get_board_id(config, config["board_name"])
+    list_id = get_list_id(config, board_id, list_name)
+
+    base_pos_value = 65536
+
+    # Set the position for each task in the sorted list
+    for index, task in enumerate(sorted_tasks):
+        new_pos = base_pos_value * (index + 1)  # Increase position value by the base value for each task
+        move_card(config, task["id"], list_id, pos=new_pos)
+
+
