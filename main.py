@@ -1,19 +1,17 @@
 import argparse
-from datetime import datetime, timedelta, time
+from datetime import datetime, time
 from time import sleep
-from cleaning_up import cleanup
-from performing_tasks import perform_work
-from configuration import load_config
+from cleanup_mode import cleanup
+from perform_mode import perform_work
+from library.configuration import load_config
 from simple_mode import simple_mode
-from sms_interface import (
+from library.sms_interface import (
     send_sms,
 )
-from trello_utils import (
+from library.trello_utils import (
     get_board_id,
-    get_random_task,
     get_next_task,
     check_task_exists,
-    get_task_by_name,
     get_tasks,
     move_card, get_list_id,
       rename_task_if_about_time

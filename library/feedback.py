@@ -1,4 +1,4 @@
-from trello_utils import delete_card, move_card
+from library.trello_utils import delete_card, move_card
 
 
 def user_input_menu(task, all_lists, config):

@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 import random
 import time
-from chatgpt import send_prompt_to_gpt
-from output_utils import print_and_speak
-from task_utils import print_task, select_random_task
-from trello_utils import get_all_lists, get_tasks
-from sound_utils import play_mp3_async
-from feedback import user_input_menu
+from library.chatgpt import send_prompt_to_gpt
+from library.output_utils import print_and_speak
+from library.task_utils import print_task, select_random_task
+from library.trello_utils import get_all_lists, get_tasks
+from library.sound_utils import play_mp3_async
+from library.feedback import user_input_menu
 
 
 def select_and_print_task(config, args, list_name):

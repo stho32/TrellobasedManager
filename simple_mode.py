@@ -1,5 +1,5 @@
-from feedback import user_input_menu
-from trello_utils import *
+from library.feedback import user_input_menu
+from library.trello_utils import *
 import random
 
 

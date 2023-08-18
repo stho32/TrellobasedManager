@@ -1,5 +1,5 @@
 import openai
-from configuration import load_config
+from library.configuration import load_config
 
 config = load_config()
 openai.api_key = config["GPT_API_KEY"]
