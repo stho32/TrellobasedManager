@@ -43,6 +43,24 @@ def get_random_task(config, list_name):
     task = random.choice(tasks)
     return task
 
+def get_next_task(config, list_name):
+    """
+    Get the next task from the top of a specified list.
+    
+    Args:
+        config (dict): Configuration data including API keys.
+        list_name (str): Name of the list from which to get the next task.
+        
+    Returns:
+        (dict) The next task from the top of the list, or None if the list is empty.
+    """
+    tasks = get_tasks(config, list_name)
+    if not tasks:
+        print(f"No tasks found in the list '{list_name}'.")
+        return None
+    
+    task = tasks[0]
+    return task
 
 def get_tasks(config, list_name):
     board_id = get_board_id(config, config["board_name"])

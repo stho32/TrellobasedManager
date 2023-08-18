@@ -11,6 +11,7 @@ from sms_interface import (
 from trello_utils import (
     get_board_id,
     get_random_task,
+    get_next_task,
     check_task_exists,
     get_task_by_name,
     get_tasks,
@@ -51,13 +52,13 @@ def send_sms_with_task(config):
         sleep(60)  # Wait for 60 seconds
 
     all_tasks = get_tasks(config, config["done_list_name"])
-    limit = 1
+    limit = 2
     we_have_enough_tasks = len(all_tasks) >= limit
     if we_have_enough_tasks:
         print(f"There are already a lot of tasks in the pipeline, not pushing more for now.")
         return
 
-    task = get_random_task(config, config["list_name"])
+    task = get_next_task(config, config["list_name"])
 
     token_id = config["SIPGATE_TOKENID"]
     token = config["SIPGATE_TOKEN"]
